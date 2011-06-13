@@ -213,7 +213,7 @@ url_params_each_cb(pTHX_ const ust_t *u, const char *k, STRLEN klen, bool is_utf
     dSP;
 
     key = sv_2mortal(newSVpvn(k, klen));
-    val = sv_2mortal(newSV(0));
+    val = u->decode(aTHX_ v, vlen, sv_2mortal(newSV(0)));
 
     if (is_utf8)
         SvUTF8_on(key);
@@ -224,7 +224,7 @@ url_params_each_cb(pTHX_ const ust_t *u, const char *k, STRLEN klen, bool is_utf
     PUSHMARK(SP);
     EXTEND(SP, 2);
     PUSHs(key);
-    PUSHs(u->decode(aTHX_ v, vlen, val));
+    PUSHs(val);
     PUTBACK;
 
     call_sv(u->sv, G_DISCARD);
