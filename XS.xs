@@ -2,6 +2,8 @@
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
+#define NEED_sv_2pv_flags
+#include "ppport.h"
 
 #define HEXVAL(c) (((c) >= '0' && (c) <= '9') ? ((c) - '0'     ) :  \
                    ((c) >= 'A' && (c) <= 'F') ? ((c) - 'A' + 10) :  \
