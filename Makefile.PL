@@ -2,7 +2,7 @@ use strict;
 use inc::Module::Install;
 
 name           'URL-Encode-XS';
-perl_version   '5.008';
+perl_version   '5.008001';
 all_from       'lib/URL/Encode/XS.pm';
 repository     'http://github.com/chansen/p5-url-encode-xs';
 
