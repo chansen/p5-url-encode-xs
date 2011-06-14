@@ -296,7 +296,6 @@ url_params_flat(octets, utf8=FALSE)
     URL::Encode::XS::url_params_mixed = 1
     URL::Encode::XS::url_params_multi = 2
   PREINIT:
-    dXSTARG;
     const char *s;
     STRLEN len;
     ust_t u;
