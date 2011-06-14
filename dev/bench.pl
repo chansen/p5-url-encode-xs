@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use Benchmark       qw[];
-use CGI::Deurl::XS  qw[];
 use URL::Encode::XS qw[];
 use URL::Encode::PP qw[];
 
@@ -53,7 +52,9 @@ use URL::Encode::PP qw[];
     });
 }
 
-{
+eval {
+    require CGI::Deurl::XS;
+
     my $s = join '&', map { "$_=%41+%42" } 'A'..'Z', 'A'..'F';
 
     print "\nBenchmarking URL::Encode::XS vs CGI::Deurl::XS\n\n";
@@ -66,5 +67,5 @@ use URL::Encode::PP qw[];
             my $hash = CGI::Deurl::XS::parse_query_string($s);
         },
     });
-}
+};
 
