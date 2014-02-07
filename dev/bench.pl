@@ -6,10 +6,10 @@ use warnings;
 use Benchmark       qw[];
 use URL::Encode::XS qw[];
 use URL::Encode::PP qw[];
+use List::Util      qw[shuffle];
 
 {
-    my $s = join '', 'A'..'F', map { sprintf "%%.2X", $_ } 'A'..'F';
-
+    my $s = join '', shuffle 'A'..'F', map { sprintf "%%%.2X", $_ } 0x20..0x29;
     print "Benchmarking url_decode() PP vs XS:\n\n";
 
     Benchmark::cmpthese( -10, {
@@ -23,7 +23,7 @@ use URL::Encode::PP qw[];
 }
 
 {
-    my $s = join '', 'A'..'F', map { chr } 0x20..0x29;
+    my $s = join '', shuffle 'A'..'F', map { chr } 0x20..0x29;
 
     print "\nBenchmarking url_encode() PP vs XS:\n\n";
 
@@ -60,10 +60,10 @@ eval {
     print "\nBenchmarking URL::Encode::XS vs CGI::Deurl::XS\n\n";
 
     Benchmark::cmpthese( -10, {
-        'url_params_mixed' => sub {
+        'URL::Encode::XS' => sub {
             my $hash = URL::Encode::XS::url_params_mixed($s);
         },
-        'parse_query_string' => sub {
+        'CGI::Deurl::XS' => sub {
             my $hash = CGI::Deurl::XS::parse_query_string($s);
         },
     });
